@@ -502,6 +502,11 @@ static void updatePositionAccelController_MC(timeDelta_t deltaMicros, float maxA
     // Calculate velocity error
     const float velErrorX = setpointX - measurementX;
     const float velErrorY = setpointY - measurementY;
+    
+    // scale maxAccelLimit to prevent output saturation on high speed movements
+    const float measurementXY=sqrtf(sq(measurementX) + sq(measurementY));
+    const float maxAccelLimit_scale=constrainf(1-measurementXY/navConfig()->general.max_manual_speed,0.5,1.0);
+    maxAccelLimit=maxAccelLimit*maxAccelLimit_scale;
 
     // Calculate XY-acceleration limit according to velocity error limit
     float accelLimitX, accelLimitY;
