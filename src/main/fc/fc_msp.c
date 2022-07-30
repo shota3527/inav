@@ -3577,8 +3577,8 @@ bool mspFCProcessInOutCommand(uint16_t cmdMSP, sbuf_t *dst, sbuf_t *src, mspResu
 
                 if (simulatorData.flags & SIMU_EXT_BATTERY_VOLTAGE) {
                      simulatorData.vbat = sbufReadU8(src);
-			}
-			else {
+			    }
+                else {
                      simulatorData.vbat = 126;
                 }
 			}
