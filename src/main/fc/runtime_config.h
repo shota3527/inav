@@ -177,6 +177,7 @@ typedef enum {
 typedef struct {
 	simulatorFlags_t flags;
 	uint8_t debugIndex;
+	uint8_t vbat;  //126 ->12.6V
 } simulatorData_t;
 
 extern simulatorData_t simulatorData;

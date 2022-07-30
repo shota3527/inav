@@ -3424,9 +3424,11 @@ bool mspFCProcessInOutCommand(uint16_t cmdMSP, sbuf_t *dst, sbuf_t *src, mspResu
         break;
     case MSP_SIMULATOR:
 		tmp_u8 = sbufReadU8(src); //MSP_SIMULATOR version
-		if (tmp_u8 != 2) break;
+		if (tmp_u8 != 3) break;
 
 		simulatorData.flags = sbufReadU8(src);
+        simulatorData.vbat = sbufReadU8(src);
+
         if ((simulatorData.flags & SIMU_ENABLE) == 0) {
 
 			if (ARMING_FLAG(SIMULATOR_MODE)) { // just once
@@ -3434,9 +3436,10 @@ bool mspFCProcessInOutCommand(uint16_t cmdMSP, sbuf_t *dst, sbuf_t *src, mspResu
 
 				baroStartCalibration();
 
+#ifdef USE_MAG
 				DISABLE_STATE(COMPASS_CALIBRATED);
 				compassInit();
-
+#endif
 				simulatorData.flags = 0;
 				//review: many states were affected. reboot?
 
@@ -3446,7 +3449,7 @@ bool mspFCProcessInOutCommand(uint16_t cmdMSP, sbuf_t *dst, sbuf_t *src, mspResu
 		else if (!areSensorsCalibrating()) {
 			if (!ARMING_FLAG(SIMULATOR_MODE)) { // just once
 				baroStartCalibration(); 
-				
+#ifdef USE_MAG		
 				if (compassConfig()->mag_hardware != 0){
 					sensorsSet(SENSOR_MAG);
 					ENABLE_STATE(COMPASS_CALIBRATED);
@@ -3455,7 +3458,7 @@ bool mspFCProcessInOutCommand(uint16_t cmdMSP, sbuf_t *dst, sbuf_t *src, mspResu
 					mag.magADC[Y] = 0;
 					mag.magADC[Z] = 0;
 				}
-
+#endif
 				ENABLE_ARMING_FLAG(SIMULATOR_MODE);
 				LOG_D(SYSTEM, "Simulator enabled");
 			}
