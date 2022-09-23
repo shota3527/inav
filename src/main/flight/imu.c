@@ -595,7 +595,7 @@ static void imuCalculateGPSacceleration(fpVector3_t *vEstcentrifugalAccelBF)
         fpVector3_t vGPSacc = {.v = {0.0f, 0.0f, 0.0f}};
         vGPSacc.x = -(currentGPSvel.x - lastGPSvel.x) / (MS2S(time_delta_ms)); // the x axis of accerometer is pointing backward
         vGPSacc.y = (currentGPSvel.y - lastGPSvel.y) / (MS2S(time_delta_ms));
-        vGPSacc.z = (currentGPSvel.z - lastGPSvel.z) / (MS2S(time_delta_ms));
+        // vGPSacc.z = (currentGPSvel.z - lastGPSvel.z) / (MS2S(time_delta_ms));
         // Calculate estimated centrifugal accleration vector in body frame
         quaternionRotateVector(vEstcentrifugalAccelBF, &vGPSacc, &orientation); // EF -> BF
         lastGPSNewDataTime = currenttime;
