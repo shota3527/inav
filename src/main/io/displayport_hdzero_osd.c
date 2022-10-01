@@ -54,8 +54,8 @@ FILE_COMPILE_FOR_SPEED
 #define MSP_WRITE_STRING 3
 #define MSP_DRAW_SCREEN 4
 #define MSP_SET_OPTIONS 5
-#define DRAW_FREQ_DENOM 4 // 60Hz
-#define TX_BUFFER_SIZE 1024
+#define DRAW_FREQ_DENOM 8 // 30Hz
+#define TX_BUFFER_SIZE 2048
 #define VTX_TIMEOUT 1000 // 1 second timer
 
 static mspProcessCommandFnPtr mspProcessCommand;
@@ -222,9 +222,9 @@ static void printStats(displayPort_t *displayPort, uint32_t updates)
  */
 static int drawScreen(displayPort_t *displayPort) // 250Hz
 {
-    static uint8_t counter = 0;
-
-    if ((counter++ % DRAW_FREQ_DENOM) == 0) {
+    static uint16_t counter = 0;
+    counter++;
+    if ((counter % DRAW_FREQ_DENOM) == 0) {
         uint8_t subcmd[COLS + 4];
         uint8_t updateCount = 0;
         subcmd[0] = MSP_WRITE_STRING;
@@ -255,7 +255,9 @@ static int drawScreen(displayPort_t *displayPort) // 250Hz
             updateCount++;
             next = BITARRAY_FIND_FIRST_SET(dirty, pos);
         }
-
+        if ((counter % (DRAW_FREQ_DENOM*512)) == 0) {
+            clearScreen(displayPort);
+        }
         if (updateCount > 0 || screenCleared) {
             if (screenCleared) {
                 screenCleared = false;
@@ -263,7 +265,6 @@ static int drawScreen(displayPort_t *displayPort) // 250Hz
             subcmd[0] = MSP_DRAW_SCREEN;
             output(displayPort, MSP_DISPLAYPORT, subcmd, 1);
         }
-
 #ifdef HDZERO_STATS
         printStats(displayPort, updateCount);
 #endif
