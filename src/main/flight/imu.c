@@ -565,7 +565,8 @@ static float imuCalculateAccelerometerWeightRateIgnore(const float acc_ignore_sl
     float accWeight_RateIgnore = 1.0f;
 
     if (ARMING_FLAG(ARMED) && imuConfig()->acc_ignore_rate)
-    {
+    {   
+        imuMeasuredRotationBFFiltered.x=0.0f;
         float rotRateMagnitude = fast_fsqrtf(vectorNormSquared(&imuMeasuredRotationBFFiltered));
         rotRateMagnitude = rotRateMagnitude / (acc_ignore_slope_multipiler + 0.001f);
         if (imuConfig()->acc_ignore_slope)
