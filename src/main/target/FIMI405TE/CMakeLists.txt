@@ -1,0 +1,1 @@
+target_stm32f405xg(FIMI405TE_SD_VTOL)
