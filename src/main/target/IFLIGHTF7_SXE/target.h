@@ -18,8 +18,11 @@
 #pragma once
 
 #define TARGET_BOARD_IDENTIFIER "IF7E"
+#ifdef IFLIGHTF7_SXE
 #define USBD_PRODUCT_STRING     "IFLIGHTF7_SXE"
-
+#elif defined(IFLIGHTF7_SXEMINI)
+#define USBD_PRODUCT_STRING     "IFLIGHTF7_SXEMINI"
+#endif
 #define LED0                    PC4
 #define BEEPER                  PC15
 #define BEEPER_INVERTED
@@ -33,7 +36,11 @@
 
 // MPU6000
 #define USE_IMU_MPU6000
+#ifdef IFLIGHTF7_SXE
 #define IMU_MPU6000_ALIGN       CW180_DEG
+#elif defined(IFLIGHTF7_SXEMINI)
+#define IMU_MPU6000_ALIGN       CW270_DEG
+#endif
 #define MPU6000_SPI_BUS         BUS_SPI1
 #define MPU6000_EXTI_PIN        PA8
 #define MPU6000_CS_PIN          PA15

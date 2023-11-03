@@ -1,1 +1,2 @@
 target_stm32f722xe(IFLIGHTF7_SXE)
+target_stm32f722xe(IFLIGHTF7_SXEMINI)
