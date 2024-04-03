@@ -15,28 +15,27 @@
 * along with Cleanflight.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <stdbool.h>
-#include <platform.h>
+#include <stdint.h>
+#include "platform.h"
 #include "drivers/bus.h"
 #include "drivers/io.h"
 #include "drivers/pwm_mapping.h"
 #include "drivers/timer.h"
-#include "drivers/pinio.h"
+#include "drivers/sensor.h"
+
+// Board hardware definitions
 
 timerHardware_t timerHardware[] = {
-    DEF_TIM(TIM3,  CH1, PB4,  TIM_USE_OUTPUT_AUTO, 0, 0), // S1  D(1,4,5)
-    DEF_TIM(TIM3,  CH2, PB5,  TIM_USE_OUTPUT_AUTO, 0, 0), // S2  D(1,5,5)
-    DEF_TIM(TIM1,  CH1, PA8,  TIM_USE_OUTPUT_AUTO, 0, 1), // S3  D(2,1,6)
-    DEF_TIM(TIM1,  CH2, PA9,  TIM_USE_OUTPUT_AUTO, 0, 1), // S4  D(2,2,6)
-    DEF_TIM(TIM1,  CH3, PA10, TIM_USE_OUTPUT_AUTO, 0, 1), // S5  D(2,6,6)
-    DEF_TIM(TIM4,  CH3, PB8,  TIM_USE_OUTPUT_AUTO, 0, 0), // S6  D(1,7,2)
-
-    DEF_TIM(TIM5,  CH3, PA2,  TIM_USE_ANY, 0, 0), //TX2 pad - softserial_tx2
-
-    DEF_TIM(TIM11, CH1, PB9,  TIM_USE_ANY, 0, 0), //ST1 pad -softserial_tx1    
-
-    // DEF_TIM(TIM9,  CH2, PA3,  TIM_USE_PPM, 0, 0), //RX2 Pad -PPM
-
+    DEF_TIM(TIM5, CH4, PA3, TIM_USE_PPM,                         0, 0), //RX2
+    DEF_TIM(TIM8, CH3, PC8, TIM_USE_OUTPUT_AUTO, 0, 0), //M1
+    DEF_TIM(TIM8, CH1, PC6, TIM_USE_OUTPUT_AUTO, 0, 0), //M2
+    DEF_TIM(TIM8, CH4, PC9, TIM_USE_OUTPUT_AUTO, 0, 0), //M3
+    DEF_TIM(TIM8, CH2, PC7, TIM_USE_OUTPUT_AUTO, 0, 0), //M4
+    DEF_TIM(TIM4, CH1, PB6, TIM_USE_OUTPUT_AUTO, 0, 0), //M5
+    DEF_TIM(TIM4, CH2, PB7, TIM_USE_OUTPUT_AUTO, 0, 0), //M6
+    DEF_TIM(TIM3, CH4, PB1, TIM_USE_OUTPUT_AUTO, 0, 0), //M7
+    DEF_TIM(TIM3, CH3, PB0, TIM_USE_OUTPUT_AUTO, 0, 0), //M8
+    DEF_TIM(TIM2, CH2, PA1, TIM_USE_LED, 0, 0), //LED STRIP
 };
 
 const int timerHardwareCount = sizeof(timerHardware) / sizeof(timerHardware[0]);

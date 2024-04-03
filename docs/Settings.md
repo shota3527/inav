@@ -242,6 +242,16 @@ Inertial Measurement Unit KP Gain for compass measurements
 
 ---
 
+### ahrs_gps_yaw_weight
+
+Arhs gps yaw weight when mag is avaliable, 0 means no gps yaw, 100 means equal weight as compass
+
+| Default | Min | Max |
+| --- | --- | --- |
+| 100 | 0 | 500 |
+
+---
+
 ### ahrs_gps_yaw_windcomp
 
 Wind compensation in heading estimation from gps groundcourse(fixed wing only)
@@ -1474,11 +1484,11 @@ Enable automatic configuration of UBlox GPS receivers.
 
 ### gps_dyn_model
 
-GPS navigation model: Pedestrian, Air_1g, Air_4g. Default is AIR_1G. Use pedestrian with caution, can cause flyaways with fast flying.
+GPS navigation model: Pedestrian, Automotive, Air<1g, Air<2g, Air<4g. Default is AIR_2G. Use pedestrian/Automotive with caution, can cause flyaways with fast flying.
 
 | Default | Min | Max |
 | --- | --- | --- |
-| AIR_1G |  |  |
+| AIR_2G |  |  |
 
 ---
 
@@ -1912,33 +1922,23 @@ Decay coefficient for estimated velocity when GPS reference for position is lost
 
 ---
 
-### inav_w_xyz_acc_p
-
-_// TODO_
-
-| Default | Min | Max |
-| --- | --- | --- |
-| 1.0 | 0 | 1 |
-
----
-
 ### inav_w_z_baro_p
 
-Weight of barometer measurements in estimated altitude and climb rate
+Weight of barometer measurements in estimated altitude and climb rate. Setting is used on both airplanes and multirotors.
 
 | Default | Min | Max |
 | --- | --- | --- |
-| 0.35 | 0 | 10 |
+| 0.4 | 0 | 10 |
 
 ---
 
 ### inav_w_z_gps_p
 
-Weight of GPS altitude measurements in estimated altitude. Setting is used only of airplanes
+Weight of GPS altitude measurements in estimated altitude. Setting is used on both airplanes and multirotors.
 
 | Default | Min | Max |
 | --- | --- | --- |
-| 0.2 | 0 | 10 |
+| 0.4 | 0 | 10 |
 
 ---
 
@@ -1948,7 +1948,7 @@ Weight of GPS climb rate measurements in estimated climb rate. Setting is used o
 
 | Default | Min | Max |
 | --- | --- | --- |
-| 0.1 | 0 | 10 |
+| 0.8 | 0 | 10 |
 
 ---
 
@@ -2762,16 +2762,6 @@ Craft name
 
 ---
 
-### nav_auto_climb_rate
-
-Maximum climb/descent rate that UAV is allowed to reach during navigation modes. [cm/s]
-
-| Default | Min | Max |
-| --- | --- | --- |
-| 500 | 10 | 2000 |
-
----
-
 ### nav_auto_disarm_delay
 
 Delay before craft disarms when `nav_disarm_on_landing` is set (ms)
@@ -3092,6 +3082,16 @@ PosHold radius. 3000 to 7500 is a good value (30-75m) [cm]
 
 ---
 
+### nav_fw_manual_climb_rate
+
+Maximum climb/descent rate firmware is allowed when processing pilot input for ALTHOLD control mode [cm/s]
+
+| Default | Min | Max |
+| --- | --- | --- |
+| 300 | 10 | 2500 |
+
+---
+
 ### nav_fw_max_thr
 
 Maximum throttle for flying wing in GPS assisted modes
@@ -3362,16 +3362,6 @@ Allows immediate landing detection based on G bump at touchdown when set to ON. 
 
 ---
 
-### nav_manual_climb_rate
-
-Maximum climb/descent rate firmware is allowed when processing pilot input for ALTHOLD control mode [cm/s]
-
-| Default | Min | Max |
-| --- | --- | --- |
-| 200 | 10 | 2000 |
-
----
-
 ### nav_manual_speed
 
 Maximum speed allowed when processing pilot input for POSHOLD/CRUISE control mode [cm/s] [Multirotor only]
@@ -3419,6 +3409,16 @@ If set to STICK the FC remembers the throttle stick position when enabling ALTHO
 | Default | Min | Max |
 | --- | --- | --- |
 | STICK |  |  |
+
+---
+
+### nav_mc_auto_climb_rate
+
+Maximum climb/descent rate that UAV is allowed to reach during navigation modes. [cm/s]
+
+| Default | Min | Max |
+| --- | --- | --- |
+| 500 | 10 | 2000 |
 
 ---
 
@@ -3529,6 +3529,16 @@ Multicopter hover throttle hint for altitude controller. Should be set to approx
 | Default | Min | Max |
 | --- | --- | --- |
 | 1300 | 1000 | 2000 |
+
+---
+
+### nav_mc_manual_climb_rate
+
+Maximum climb/descent rate firmware is allowed when processing pilot input for ALTHOLD control mode [cm/s]
+
+| Default | Min | Max |
+| --- | --- | --- |
+| 200 | 10 | 2000 |
 
 ---
 
@@ -5759,6 +5769,16 @@ Delay before disarming when requested by switch (ms) [0-1000]
 | Default | Min | Max |
 | --- | --- | --- |
 | 250 | 0 | 1000 |
+
+---
+
+### tailsitter_orientation_offset
+
+Apply a 90 deg pitch offset in sensor aliment for tailsitter flying mode
+
+| Default | Min | Max |
+| --- | --- | --- |
+| OFF | OFF | ON |
 
 ---
 
